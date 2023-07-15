@@ -38,6 +38,7 @@ async function onSearchFormSubmit(evt) {
       }
       onFetchSuccess(totalImages);
       galleryList.innerHTML = createGalleryCards(arrayImages);
+      lightbox.refresh();
       btnLoadMore.style.display = 'block';
     })
     .catch(onFetchError);
@@ -45,7 +46,7 @@ async function onSearchFormSubmit(evt) {
 
 function onBtnLoadMoreClick() {
   galleryInstance.page += 1;
-  lightbox.refresh();
+  
   galleryInstance.fetchImages().then(data => {
     if (data.data.total === data.data.totalHits) {
       btnLoadMore.style.display = 'none';
@@ -55,6 +56,7 @@ function onBtnLoadMoreClick() {
       'beforeend',
       createGalleryCards(data.data.hits)
     );
+    lightbox.refresh();
   });
 }
 
@@ -135,6 +137,9 @@ function createGalleryCards(arr) {
 </div>`
     )
     .join('');
+  
+ 
+  
 }
 searchFormEl.addEventListener('submit', onSearchFormSubmit);
 
